@@ -1,0 +1,23 @@
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+    <head>
+        <title> Stwórz komentarz </title>
+    </head>
+
+    <body>
+
+        <section class="py-5 bg-light border-bottom mb-4" layout:fragment="body">
+            <div class="container">
+                <form role="form" method="post" th:action="@{/komentarze/{komentarzId}/edytuj(komentarzId=${komentarzId})}" th:object="${komentarz}">
+                    <div class="form-group mb-3">
+                        <label for="tresc">Treść</label>
+                        <textarea class="form-control" id="tresc" placeholder="Treść" name="tresc" th:field="*{tresc}"> </textarea>
+                        <p th:if="${#fields.hasErrors('tresc')}" class="text-danger" th:errors="*{tresc}"> </p>
+                    </div>    
+                    <button type="submit" class="btn btn-primary">Stwórz</button>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>

@@ -1,0 +1,35 @@
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+    <head>
+        <title> Stwórz posta </title>
+    </head>
+
+    <body>
+
+        <section class="py-5 bg-light border-bottom mb-4" layout:fragment="body">
+            <div class="container">
+                <form role="form" method="post" th:action="@{/posty/stworz}" th:object="${post}">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="tytul">Tytuł</label>
+                            <input type="text" class="form-control" id="tytul" placeholder="Tytuł" name="tytul" th:field="*{tytul}">
+                            <p th:if="${#fields.hasErrors('tytul')}" class="text-danger" th:errors="*{tytul}"> </p>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="urlZjecia">URL zdjęcia</label>
+                            <input type="text" class="form-control" id="urlZdjecia" placeholder="URL zdjęcia" name="urlZdjecia" th:field="*{urlZdjecia}">
+                            <p th:if="${#fields.hasErrors('urlZdjecia')}" class="text-danger" th:errors="*{urlZdjecia}"> </p>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="tresc">Treść</label>
+                        <textarea class="form-control" id="tresc" placeholder="Treść" name="tresc" th:field="*{tresc}"> </textarea>
+                        <p th:if="${#fields.hasErrors('tresc')}" class="text-danger" th:errors="*{tresc}"> </p>
+                    </div>    
+                    <button type="submit" class="btn btn-primary">Stwórz</button>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org"
+      layout:decorate="~{layout}">
+    <head>
+        <title> Edytuj post </title>
+    </head>
+
+    <body>
+        <section layout:fragment="body">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <!-- Post content-->
+                        <article>
+                            <!-- Post header-->
+                            <header class="mb-4">
+                                <!-- Post title-->
+                                <div th:if="${user.id} == ${post.createdBy.id}">
+                                    <a class="btn btn-danger" th:href="@{/posty/{postId}/delete(postId=${post.id})}">Usuń post</a>
+                                </div>
+                                <h1 class="fw-bolder mb-1" th:text="${post.tytul}"></h1>
+                                <!-- Post meta content-->
+                                <div class="text-muted fst-italic mb-2" th:text="${#temporals.format(post.stworzono, 'dd-MM-yyyy HH:mm')}"></div>
+                                <div class="text-muted fst-italic mb-2" th:text="${post.createdBy.username}"></div>
+
+                            </header>
+                            <!-- Preview image figure-->
+                            <figure class="mb-4"><img class="img-fluid rounded" th:src="${post.urlZdjecia}" alt="..." /></figure>
+                            <!-- Post content-->
+                            <section class="mb-5" th:text="${post.tresc}">
+                            </section>
+
+                        </article>
+                        <!-- Comments section-->
+                        <section class="mb-5">
+                            <div class="card bg-light">
+                                <a sec:authorize="isAuthenticated()" class="btn btn-primary" th:href="@{/komentarze/{postId}/stworz(postId=${post.id})}">Dodaj komentarz</a> 
+                                <div th:each="komentarz :${post.komentarze}" class="card-body">
+                                    <div class="d-flex">
+
+                                        <div class="ms-3">
+                                            <div class="fw-bold" th:text="${#temporals.format(komentarz.dataWyslania, 'dd-MM-yyyy HH:mm')}"></div>
+                                            <div class="text-muted fst-italic mb-2" th:text="${'Autor komentarza: ' + komentarz.createdBy.username}"></div>
+                                            <div class="text-muted fst-italic mb-2" th:text="${komentarz.tresc}"></div>
+                                            
+                                            <div th:if="${user.id} == ${komentarz.createdBy.id}">
+                                                <a class="btn btn-primary" th:href="@{/komentarze/{komentarzId}/edytuj(komentarzId=${komentarz.id})}"> Edytuj komentarz </a>
+                                                <a class="btn btn-danger" th:href="@{/komentarze/{komentarzId}/delete(komentarzId=${komentarz.id})}"> Usuń komentarz </a>
+                                            </div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>   
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
+
